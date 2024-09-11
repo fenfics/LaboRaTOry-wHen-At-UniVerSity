@@ -1,0 +1,43 @@
+package lab8_3;
+
+import javax.swing.*;
+import java.awt.event.*;
+
+public class Main implements ActionListener {
+    private static int count = 0;
+    private JLabel l1;
+    private JButton jb;
+
+    public static void main(String[] args) {
+        Main main = new Main();
+        main.createUI();
+
+    }
+
+    private void createUI() {
+        JFrame frame = new JFrame("Test");
+        frame.setSize(300, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JPanel center = new JPanel();
+
+        l1 = new JLabel("Count : 0");
+        jb = new JButton("Click");
+
+        jb.addActionListener(this); // this can not used in main
+
+        center.add(jb);
+        center.add(l1);
+
+        frame.add(center);
+        frame.setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == jb) {
+            count++;
+            l1.setText("count " + count);
+        }
+
+    }
+}
