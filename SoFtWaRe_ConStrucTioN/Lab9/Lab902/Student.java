@@ -3,8 +3,6 @@ package lab9_2;
 public class Student {
     private String name;
     private String grade;
-    private static int count;
-    private double sum;
 
     public Student(String n, String grade) {
         this.name = n;
