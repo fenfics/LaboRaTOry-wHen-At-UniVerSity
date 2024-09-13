@@ -9,8 +9,6 @@ public class Student {
     public Student(String n, String grade) {
         this.name = n;
         this.grade = grade;
-        this.sum = 0.0;
-        this.count = 0;
     }
 
     public String getName() {
@@ -21,18 +19,42 @@ public class Student {
         return this.grade;
     }
 
-    public static double calGPA(String grade) {
+    public double calGPA() {
         double sum = 0;
         int count = 0;
 
-        
+        for (char grades : grade.toCharArray()) {
+            switch (Character.toUpperCase(grades)) {
+                case 'A':
+                    sum += 4.0;
+                    count++;
+                    break;
+                case 'B':
+                    sum += 3.0;
+                    count++;
+                    break;
+                case 'C':
+                    sum += 2.0;
+                    count++;
+                    break;
+                case 'D':
+                    sum += 1.0;
+                    count++;
+                    break;
+                case 'F':
+                    count++;
+                    break;
+                default:
 
-         
+                    break;
+            }
+        }
 
-        
-
-    
-        return count == 0 ? 0 : sum / count;
+        if (count == 0) {
+            return 0;
+        } else {
+            return sum / count;
+        }
     }
 
     public void show() throws IncompleteException, DigitException, SpaceException, GradeException {
@@ -52,9 +74,7 @@ public class Student {
             throw new GradeException("(grade I is incomplete) cannot display.");
         }
 
-        double gpa = calGPA(grade);
-
-        System.out.println(name + " registered " + count + " subjects and got GPA " + gpa);
+        System.out.println(name + " registered " + grade.length() + " subjects and got GPA " + calGPA());
     }
 
     class IncompleteException extends Exception {
