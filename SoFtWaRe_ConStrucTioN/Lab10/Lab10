@@ -1,0 +1,54 @@
+package Lap10;
+
+import javax.swing.*;
+import java.awt.event.*;
+import java.text.DecimalFormat;
+import java.awt.*;
+
+public class Calculator extends JFrame implements ActionListener {
+    JButton[] buttons;
+    String[] cal = {"7","8","9"," x ","5","6","7"," - ","1","2","3"," + ","+/-","0",".","="};
+    JPanel buttonPanel;
+    JPanel numPanel;
+    JTextField displayTextField;
+    public Calculator(){
+        super("Calculator");
+
+        getContentPane().add(setBottonPanel());
+        getContentPane().add(setNumPanel(),BorderLayout.NORTH);
+        setSize(400,350);
+        setVisible(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+    private JPanel setBottonPanel(){
+        if(buttonPanel == null){
+            buttonPanel = new JPanel();
+            buttonPanel.setLayout(new GridLayout(4,4,5,5));
+            buttons = new JButton[16];
+            for(int i = 0; i < cal.length; i++){
+                buttons[i] = new JButton(cal[i]);
+                buttonPanel.add(buttons[i]);
+                buttons[i].addActionListener(this);
+            }
+        }
+        return buttonPanel;
+    }
+
+    private JPanel setNumPanel(){
+        if(numPanel == null){
+            numPanel = new JPanel();
+            displayTextField = new JTextField();
+            displayTextField.setHorizontalAlignment(JTextField.RIGHT);
+            numPanel.setLayout(new BorderLayout());
+            numPanel.add(displayTextField);
+        }
+        return numPanel;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JButton button = (JButton) e.getSource();
+        displayTextField.setText(displayTextField.getText() + button.getText()); 
+    }
+   
+}
