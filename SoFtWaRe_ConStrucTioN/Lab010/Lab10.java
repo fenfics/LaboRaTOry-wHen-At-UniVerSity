@@ -1,16 +1,15 @@
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.Stack;
 import java.awt.*;
 
-public class Calculator extends JFrame implements ActionListener {
-    Stack<Integer> s1 = new Stack<>();
+public class Calculator extends JFrame implements ActionListener{
     JButton[] buttons;
     String[] cal = { "C", "%", "/", "*", "7", "8", "9", " x ", "4", "5", "6", " - ", "1", "2", "3", " + ", "+/-", "0",
             ".", "=" };
     JPanel buttonPanel;
     JPanel numPanel;
     JTextField displayTextField;
+    String input = "";
 
     public Calculator() {
         super("Calculator");
@@ -53,23 +52,15 @@ public class Calculator extends JFrame implements ActionListener {
         return numPanel;
     }
 
-    public void actionPerformed(ActionEvent e) {
-        JButton button = (JButton) e.getSource();
-        s1.push(Integer.parseInt(button.getText())); // Convert button text to integer and push to stack
-        displayTextField.setText(displayTextField.getText() + button.getText());
-    
-        if (button.getText().equals("+")) {
-            if (s1.size() >= 2) {
-                int num2 = s1.pop();
-                int num1 = s1.pop();
-                int sum = num1 + num2;
-                s1.push(sum); // Push result back to stack
-                displayTextField.setText(String.valueOf(sum)); // Display the result
-            }
-        }
-    }
 
+        public void actionPerformed(ActionEvent e) {
+            JButton button = (JButton) e.getSource();
+            displayTextField.setText(displayTextField.getText() + button.getText());
+
+       
+    }
 }
+
 // /*import javax.swing.*;
 // import java.awt.*;
 // import java.awt.event.ActionEvent;
