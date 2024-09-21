@@ -5,10 +5,17 @@ newline: .string "\n"
 
 .text
 .globl main
-
+#int main() {
+#int i, result;
+#for (i=0; i<9; i++) {
+#result = fact(i);
+#printf("Factorial of %d is %d\n", i, result);
+#}
+#return 0;
+#}
 main:
-    addi sp, sp, -4
-    sw ra, 0(sp)
+    addi sp, sp, -4 #allocate 4 bytes on the stack
+    sw ra, 0(sp) 
 
     li x18, 0  # i = 0
     li x19, 9  # x19=9
@@ -49,6 +56,12 @@ loop:
     addi x18, x18, 1#i++
     j loop
     
+#int fact(int n) {
+#int i, result;
+#if (n == 0) {
+#return 1;}
+#result = fact(n-1)*n;
+#return result;}
 
 fact:
     addi sp, sp, -8
