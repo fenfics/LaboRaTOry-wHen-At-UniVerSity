@@ -85,17 +85,17 @@ base_case:
 end_fact:
     mv a0, x20  # Set return value
 
-    # Epilogue
-    lw x19, 0(sp)
-    lw ra, 4(sp)
-    addi sp, sp, 8
+    # end code
+    lw x19, 0(sp) #คืนค่า x19
+    lw ra, 4(sp)  #คืนค่า ra
+    addi sp, sp, 8  #deallocate 8 bytes 
     ret
 
 
 
 exit_loop:
-    lw ra, 0(sp)
-    addi sp, sp, 4
+    lw ra, 0(sp) 
+    addi sp, sp, 4  #deallocate 4 bytes 
 
     # Return 0
     li a0, 0
