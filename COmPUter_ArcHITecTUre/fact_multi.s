@@ -24,7 +24,7 @@ loop:
     bge x18, x19, exit_loop #ifi>=9 goto exit_loop
 
     # Call fact(i)
-    mv a0, x18
+    mv a0, x18 #pass argument i to fact function
     jal fact # Call fact(i)
     mv x20, a0  # Store result in x20
 
