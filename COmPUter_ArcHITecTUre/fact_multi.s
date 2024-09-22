@@ -58,7 +58,7 @@ loop:
     
 #int fact(int n) {
 #int i, result;
-#if (n == 0) {
+# if (n == 0) {
 #return 1;}
 #result = fact(n-1)*n;
 #return result;}
