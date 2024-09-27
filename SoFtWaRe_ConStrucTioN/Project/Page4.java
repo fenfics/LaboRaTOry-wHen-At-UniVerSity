@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.event.MouseAdapter;
@@ -44,6 +45,8 @@ public class Page4 {
         discount.setFont(new Font("Tahoma", Font.PLAIN, 25));
         discount.setBounds(500, 180, 300, 45);
         discount.setBackground(Color.LIGHT_GRAY);
+        Border border = BorderFactory.createLineBorder(Color.GRAY, 3);
+        discount.setBorder(border); // ตั้งกรอบให้ JLabel
         discount.setOpaque(true);
         layeredPane.add(discount, JLayeredPane.PALETTE_LAYER);
 
@@ -92,13 +95,13 @@ class DisplayGraphics extends JPanel {
         setOpaque(false);
 
         Graphics2D g2d = (Graphics2D) g;
-
+        //วาดเส้น
         g2d.setColor(Color.decode("#6390BA"));
         g2d.setStroke(new BasicStroke(7));
         g.drawLine(0, 90, 1133, 90);
     }
 }
-
+//ทำปุ่มกดแบบมน
 class RoundedButton extends JButton {
     private boolean isPressed = false;
     private final int radius;
@@ -160,7 +163,7 @@ class RoundedButton extends JButton {
         return new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, radius, radius).contains(x, y);
     }
 }
-
+//ทำลาเบลแบบมน
 class RoundedLabel extends JLabel {
     private int radius;
 
@@ -180,7 +183,7 @@ class RoundedLabel extends JLabel {
         g2.dispose();
     }
 }
-
+//ทำคอมโบบ็อกซ์แบบมน
 class RoundedComboBox extends JComboBox<String> {
     private int radius;
 
