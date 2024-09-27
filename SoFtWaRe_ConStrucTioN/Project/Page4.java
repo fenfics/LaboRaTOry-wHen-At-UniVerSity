@@ -101,6 +101,7 @@ class DisplayGraphics extends JPanel {
         g.drawLine(0, 90, 1133, 90);
     }
 }
+
 //ทำปุ่มกดแบบมน
 class RoundedButton extends JButton {
     private boolean isPressed = false;
@@ -163,6 +164,7 @@ class RoundedButton extends JButton {
         return new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, radius, radius).contains(x, y);
     }
 }
+
 //ทำลาเบลแบบมน
 class RoundedLabel extends JLabel {
     private int radius;
@@ -183,6 +185,7 @@ class RoundedLabel extends JLabel {
         g2.dispose();
     }
 }
+
 //ทำคอมโบบ็อกซ์แบบมน
 class RoundedComboBox extends JComboBox<String> {
     private int radius;
