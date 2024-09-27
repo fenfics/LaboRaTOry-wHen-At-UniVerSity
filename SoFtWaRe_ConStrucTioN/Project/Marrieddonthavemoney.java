@@ -2,7 +2,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
-public class Marriedhavemoney {
+public class Marrieddonthavemoney {
     public static void main(String[] args) {
         JFrame frame = new JFrame();
         frame.setSize(1133, 744);
@@ -217,6 +217,22 @@ public class Marriedhavemoney {
         condition4.setFont(new Font("Tahoma", Font.PLAIN, 11));
         condition4.setBounds(75, 575, 1000, 45);
         layeredPane.add(condition4, JLayeredPane.PALETTE_LAYER);
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // ปุ่ม Home
         JButton button = new JButton("HOME");
