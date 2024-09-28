@@ -1,8 +1,9 @@
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.*;
 
-public class DivorceHaveKids {
+public class DivorceHaveKids implements ActionListener {
     public static void main(String[] args) {
         JFrame frame = new JFrame();
         frame.setSize(1133, 744);
@@ -18,42 +19,13 @@ public class DivorceHaveKids {
         DisplayGraphics m = new DisplayGraphics();
         m.setBounds(0, 0, 1133, 744);
         layeredPane.add(m, JLayeredPane.DEFAULT_LAYER);
-
         // รายการลดหย่อนภาษี : ครอบครัว
         JLabel family = new JLabel("รายการลดหย่อนภาษี : ครอบครัว");
         family.setFont(new Font("Tahoma", Font.BOLD, 32));
         family.setBounds(160, 15, 1000, 50);
         layeredPane.add(family, JLayeredPane.PALETTE_LAYER);
 
-        // สถานะสมรส
-        JLabel status = new JLabel("สถานะสมรส");
-        status.setFont(new Font("Tahoma", Font.BOLD, 24));
-        status.setBounds(75, 100, 1000, 50);
-        layeredPane.add(status, JLayeredPane.PALETTE_LAYER);
-
-        // ลดหย่อนส่วนบุคคล
-        JLabel own = new JLabel("ลดหย่อนส่วนบุคคล");
-        own.setFont(new Font("Tahoma", Font.BOLD, 24));
-        own.setBounds(540, 100, 1000, 50);
-        layeredPane.add(own, JLayeredPane.PALETTE_LAYER);
-
-        // ล็อก ลดหย่อน 60000
-        JLabel discount = new JLabel("  60,000");
-        discount.setFont(new Font("Tahoma", Font.PLAIN, 24));
-        discount.setBounds(540, 155, 300, 45);
-        discount.setBackground(Color.LIGHT_GRAY);
-        Border border = BorderFactory.createLineBorder(Color.GRAY, 3);
-        discount.setBorder(border); // ตั้งกรอบให้ JLabel
-        discount.setOpaque(true);
-        layeredPane.add(discount, JLayeredPane.PALETTE_LAYER);
-
-        // เลือกสถานะ
-        String s1[] = { "  โสด", "  หย่า", "  คู่สมรสมีเงินได้", "  คู่สมรสไม่มีเงินได้" };
-        JComboBox chosestatus = new JComboBox(s1);
-        chosestatus.setFont(new Font("Tahoma", Font.PLAIN, 25));
-        chosestatus.setBounds(75, 155, 300, 45);
-        layeredPane.add(chosestatus, JLayeredPane.PALETTE_LAYER);
-
+        
         // ลดหย่อนบิดา-มารดา (ตนเอง)
         JLabel fathmoth = new JLabel("ลดหย่อนบิดา-มารดา (ตนเอง)");
         fathmoth.setFont(new Font("Tahoma", Font.BOLD, 24));
@@ -73,112 +45,199 @@ public class DivorceHaveKids {
         mother1.setOpaque(false); // ตั้งค่าให้ปุ่มโปร่งใส
         layeredPane.add(mother1, JLayeredPane.PALETTE_LAYER);
 
-        //คนละ 30,000 บาท (บิดามารดาต้องมีอายุเกิน 60 ปี และมีเงินได้ไม่เกิน 30,000 บาทต่อปี) 
-        JLabel condition1 = new JLabel("คนละ 30,000 บาท (บิดามารดาต้องมีอายุเกิน 60 ปี และมีเงินได้ไม่เกิน 30,000 บาทต่อปี)");
+        // คนละ 30,000 บาท (บิดามารดาต้องมีอายุเกิน 60 ปี และมีเงินได้ไม่เกิน 30,000
+        // บาทต่อปี) 
+        JLabel condition1 = new JLabel(
+                "คนละ 30,000 บาท (บิดามารดาต้องมีอายุเกิน 60 ปี และมีเงินได้ไม่เกิน 30,000 บาทต่อปี)");
         condition1.setFont(new Font("Tahoma", Font.PLAIN, 11));
         condition1.setBounds(75, 275, 1000, 45);
         layeredPane.add(condition1, JLayeredPane.PALETTE_LAYER);
 
-        //(ได้ทั้งบิดา มารดาของตนเอง และคู่สมรส)
+        // (ได้ทั้งบิดา มารดาของตนเอง และคู่สมรส)
         JLabel condition2 = new JLabel("(ได้ทั้งบิดา มารดาของตนเอง และคู่สมรส)");
         condition2.setFont(new Font("Tahoma", Font.PLAIN, 11));
         condition2.setBounds(75, 290, 1000, 45);
         layeredPane.add(condition2, JLayeredPane.PALETTE_LAYER);
 
-        //บุตรคนที่ 1 (เกิดปีใดก็ตาม)
+        // บุตรคนที่ 1 (เกิดปีใดก็ตาม)
         JLabel son_1 = new JLabel("บุตรคนที่ 1 (เกิดปีใดก็ตาม)");
         son_1.setFont(new Font("Tahoma", Font.BOLD, 24));
         son_1.setBounds(540, 215, 500, 45);
         layeredPane.add(son_1, JLayeredPane.PALETTE_LAYER);
 
-        //ปุ่มเลือกบุตร1
+        // ปุ่มเลือกบุตร1
         JRadioButton have = new JRadioButton(" มี");
         JRadioButton donthave = new JRadioButton(" ไม่มี");
-        ButtonGroup bg=new ButtonGroup();
-        bg.add(donthave);bg.add(have);
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(donthave);
+        bg.add(have);
         have.setFont(new Font("Tahoma", Font.PLAIN, 20));
         have.setBounds(565, 245, 150, 50);
         have.setOpaque(false); // ตั้งค่าให้ปุ่มโปร่งใส
-        layeredPane.add(have, JLayeredPane.PALETTE_LAYER); 
-        donthave.setFont(new Font("Tahoma", Font.PLAIN, 20));   
+        layeredPane.add(have, JLayeredPane.PALETTE_LAYER);
+        donthave.setFont(new Font("Tahoma", Font.PLAIN, 20));
         donthave.setBounds(765, 245, 150, 50);
         donthave.setOpaque(false); // ตั้งค่าให้ปุ่มโปร่งใส
         layeredPane.add(donthave, JLayeredPane.PALETTE_LAYER);
-        
-        //ลดหย่อน 30,000 บาท
+
+        // ลดหย่อน 30,000 บาท
         JLabel discount_30000 = new JLabel("ลดหย่อน 30,000 บาท");
         discount_30000.setFont(new Font("Tahoma", Font.BOLD, 11));
         discount_30000.setBounds(855, 220, 500, 45);
         layeredPane.add(discount_30000, JLayeredPane.PALETTE_LAYER);
 
-        //บุตรคนที่ 2 เป็นต้นไป
-        JLabel son_2_more= new JLabel("บุตรคนที่ 2 เป็นต้นไป");
+        // สร้าง JPanel สำหรับเก็บคอมโพเนนต์ที่จะแสดงเมื่อเลือก "มี"
+        JPanel havePanel = new JPanel();
+        havePanel.setLayout(null);
+        havePanel.setBounds(75, 325, 1000, 300);
+        havePanel.setOpaque(false);
+        havePanel.setVisible(false);
+        layeredPane.add(havePanel, JLayeredPane.PALETTE_LAYER);
+
+        // บุตรคนที่ 2 เป็นต้นไป
+        JLabel son_2_more = new JLabel("บุตรคนที่ 2 เป็นต้นไป");
         son_2_more.setFont(new Font("Tahoma", Font.BOLD, 24));
-        son_2_more.setBounds(75, 325, 500, 45);
-        layeredPane.add(son_2_more, JLayeredPane.PALETTE_LAYER);
+        son_2_more.setBounds(0, 0, 500, 45); // เดิม (75, 325) ใน JFrame
+        havePanel.add(son_2_more);
 
-        //จำนวนบุตรที่เกิดก่อนปี 2561
-        JLabel son_before2561= new JLabel("จำนวนบุตรที่เกิดก่อนปี 2561");
+        // จำนวนบุตรที่เกิดก่อนปี 2561
+        JLabel son_before2561 = new JLabel("จำนวนบุตรที่เกิดก่อนปี 2561");
         son_before2561.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        son_before2561.setBounds(75, 355, 500, 45);
-        layeredPane.add(son_before2561, JLayeredPane.PALETTE_LAYER);
+        son_before2561.setBounds(0, 30, 500, 45); // เดิม (75, 355) ใน JFrame
+        havePanel.add(son_before2561);
 
-        //ลดหย่อน 30,000 บาท
+        // ลดหย่อน 30,000 บาท
         JLabel discount2_30000 = new JLabel("ลดหย่อน 30,000 บาท ");
         discount2_30000.setFont(new Font("Tahoma", Font.BOLD, 11));
-        discount2_30000.setBounds(320, 357, 500, 45);
-        layeredPane.add(discount2_30000, JLayeredPane.PALETTE_LAYER);
+        discount2_30000.setBounds(245, 32, 500, 45); // เดิม (320, 357) ใน JFrame
+        havePanel.add(discount2_30000);
 
-        //จำนวนบุตรที่เกิดตั้งแต่ปี 2561 เป็นต้นไป
+        // จำนวนบุตรที่เกิดตั้งแต่ปี 2561 เป็นต้นไป
         JLabel son_after2561 = new JLabel("จำนวนบุตรที่เกิดตั้งแต่ปี 2561 เป็นต้นไป");
         son_after2561.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        son_after2561.setBounds(540, 355, 1000, 45);
-        layeredPane.add(son_after2561, JLayeredPane.PALETTE_LAYER);
+        son_after2561.setBounds(465, 30, 1000, 45); // เดิม (540, 355) ใน JFrame
+        havePanel.add(son_after2561);
 
-        //ลดหย่อน 30,000 บาท
-        JLabel discount3_30000 = new JLabel("ลดหย่อน 60,000 บาท");
+        // ลดหย่อน 30,000 บาท
+        JLabel discount3_30000 = new JLabel("ลดหย่อน 30,000 บาท");
         discount3_30000.setFont(new Font("Tahoma", Font.BOLD, 11));
-        discount3_30000.setBounds(875, 357, 500, 45);
-        layeredPane.add(discount3_30000, JLayeredPane.PALETTE_LAYER);
+        discount3_30000.setBounds(800, 32, 500, 45); // เดิม (875, 357) ใน JFrame
+        havePanel.add(discount3_30000);
 
-        //textfield ของบุตรก่อน2561
+        // textfield ของบุตรก่อน2561
         JTextField text_before = new JTextField(" ");
         text_before.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        text_before.setBounds(75, 395, 300, 45);
-        layeredPane.add(text_before, JLayeredPane.PALETTE_LAYER);
+        text_before.setBounds(0, 70, 300, 45); // เดิม (75, 395) ใน JFrame
+        havePanel.add(text_before);
 
-        //textfield ของบุตรหลัง2561
+        // textfield ของบุตรหลัง2561
         JTextField text_after = new JTextField(" ");
         text_after.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        text_after.setBounds(540, 395, 300, 45);
-        layeredPane.add(text_after, JLayeredPane.PALETTE_LAYER);
+        text_after.setBounds(465, 70, 300, 45); // เดิม (540, 395) ใน JFrame
+        havePanel.add(text_after);
 
         // ลดหย่อนผู้พิการหรือทุพพลภาพ (ไม่มีเงินได้)
         JLabel disabled_no_money = new JLabel("ลดหย่อนผู้พิการหรือทุพพลภาพ (ไม่มีเงินได้)");
         disabled_no_money.setFont(new Font("Tahoma", Font.BOLD, 24));
-        disabled_no_money.setBounds(75, 440, 1000, 45);
-        layeredPane.add(disabled_no_money, JLayeredPane.PALETTE_LAYER);
+        disabled_no_money.setBounds(0, 115, 1000, 45);
+        havePanel.add(disabled_no_money);
 
         // ปุ่มกลมพ่อแม่ญาติ
         JRadioButton father2 = new JRadioButton(" บิดา");
         father2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        father2.setBounds(100, 470, 150, 50);
-        father2.setOpaque(false); // ตั้งค่าให้ปุ่มโปร่งใส
-        layeredPane.add(father2, JLayeredPane.PALETTE_LAYER);
+        father2.setBounds(25, 145, 150, 50);
+        father2.setOpaque(false);
+        havePanel.add(father2);
 
         JRadioButton mother2 = new JRadioButton(" มารดา");
         mother2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        mother2.setBounds(300, 470, 200, 50);
-        mother2.setOpaque(false); // ตั้งค่าให้ปุ่มโปร่งใส
-        layeredPane.add(mother2, JLayeredPane.PALETTE_LAYER);
+        mother2.setBounds(225, 145, 200, 50);
+        mother2.setOpaque(false);
+        havePanel.add(mother2);
 
         JRadioButton cousin1 = new JRadioButton(" ญาติ(พี่ น้อง ฯลฯ)");
         cousin1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        cousin1.setBounds(500, 470, 500, 50);
-        cousin1.setOpaque(false); // ตั้งค่าให้ปุ่มโปร่งใส
-        layeredPane.add(cousin1, JLayeredPane.PALETTE_LAYER);
+        cousin1.setBounds(425, 145, 500, 50);
+        cousin1.setOpaque(false);
+        havePanel.add(cousin1);
 
+        // กรณีบิดา, มารดา, คู่สมรส, บิดาคู่สมรส , มารดาคู่สมรส และบุตรของตนเอง
+        JLabel condition3 = new JLabel("กรณีบิดา, มารดา, คู่สมรส, บิดาคู่สมรส , มารดาคู่สมรส และบุตรของตนเอง");
+        condition3.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        condition3.setBounds(0, 180, 1000, 45);
+        havePanel.add(condition3);
 
+        // หากเป็นผู้อื่นได้เพียง 1 คนเท่านั้น ลดหย่อนได้คนละ 60,000 บาท
+        // (ต้องมีบัตรประจำตัวคนพิการ และไม่มีรายได้)
+        JLabel condition4 = new JLabel(
+                "หากเป็นผู้อื่นได้เพียง 1 คนเท่านั้น ลดหย่อนได้คนละ 60,000 บาท (ต้องมีบัตรประจำตัวคนพิการ และไม่มีรายได้)");
+        condition4.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        condition4.setBounds(0, 195, 1000, 45);
+        havePanel.add(condition4);
+
+        // สร้าง JPanel สำหรับเก็บคอมโพเนนต์ที่จะแสดงเมื่อเลือก "ไม่มี"
+        JPanel donthavePanel = new JPanel();
+        donthavePanel.setLayout(null);
+        donthavePanel.setBounds(75, 325, 1000, 300);
+        donthavePanel.setOpaque(false);
+        donthavePanel.setVisible(false);
+        layeredPane.add(donthavePanel, JLayeredPane.PALETTE_LAYER);
+
+        // ลดหย่อนผู้พิการหรือทุพพลภาพ (ไม่มีเงินได้)
+        JLabel disabled_no_money2 = new JLabel("ลดหย่อนผู้พิการหรือทุพพลภาพ (ไม่มีเงินได้)");
+        disabled_no_money2.setFont(new Font("Tahoma", Font.BOLD, 24));
+        disabled_no_money2.setBounds(0, 0, 1000, 45); // เดิม (75, 325) ใน JFrame
+        donthavePanel.add(disabled_no_money2);
+
+        // ปุ่มกลมพ่อแม่ญาติ
+        JRadioButton father22 = new JRadioButton(" บิดา");
+        father22.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        father22.setBounds(25, 35, 150, 50); // เดิม (100, 360) ใน JFrame
+        father22.setOpaque(false);
+        donthavePanel.add(father22);
+
+        JRadioButton mother22 = new JRadioButton(" มารดา");
+        mother22.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        mother22.setBounds(225, 35, 200, 50); // เดิม (300, 360) ใน JFrame
+        mother22.setOpaque(false);
+        donthavePanel.add(mother22);
+
+        JRadioButton cousin12 = new JRadioButton(" ญาติ(พี่ น้อง ฯลฯ)");
+        cousin12.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        cousin12.setBounds(425, 35, 500, 50); // เดิม (500, 360) ใน JFrame
+        cousin12.setOpaque(false);
+        donthavePanel.add(cousin12);
+
+        // กรณีบิดา, มารดา, คู่สมรส, บิดาคู่สมรส , มารดาคู่สมรส และบุตรของตนเอง
+        JLabel condition5 = new JLabel("กรณีบิดา, มารดา, คู่สมรส, บิดาคู่สมรส , มารดาคู่สมรส และบุตรของตนเอง");
+        condition5.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        condition5.setBounds(0, 65, 1000, 45);
+        donthavePanel.add(condition5);
+
+        // หากเป็นผู้อื่นได้เพียง 1 คนเท่านั้น ลดหย่อนได้คนละ 60,000 บาท
+        // (ต้องมีบัตรประจำตัวคนพิการ และไม่มีรายได้)
+        JLabel condition6 = new JLabel(
+                "หากเป็นผู้อื่นได้เพียง 1 คนเท่านั้น ลดหย่อนได้คนละ 60,000 บาท (ต้องมีบัตรประจำตัวคนพิการ และไม่มีรายได้)");
+        condition6.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        condition6.setBounds(0, 80, 1000, 45);
+        donthavePanel.add(condition6);
+
+        have.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                havePanel.setVisible(true);
+                donthavePanel.setVisible(false);
+
+            }
+        });
+
+        donthave.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                havePanel.setVisible(false);
+                donthavePanel.setVisible(true);
+            }
+        });
         // ปุ่ม Home
         JButton button = new JButton("HOME");
         button.setBackground(Color.decode("#80C8CD"));
@@ -208,10 +267,16 @@ public class DivorceHaveKids {
         button2.setBounds(587, 622, 120, 50);
         button2.setBorder(border1);
         button2.addActionListener(e -> System.out.println("NEXT button clicked"));
-        layeredPane.add(button2, JLayeredPane.PALETTE_LAYER);
 
+        layeredPane.add(button2, JLayeredPane.PALETTE_LAYER);
         frame.add(layeredPane);
         frame.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
     }
 }
 

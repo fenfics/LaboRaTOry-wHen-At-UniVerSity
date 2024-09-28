@@ -26,34 +26,7 @@ public class Marriedhavekids implements ActionListener {
         family.setBounds(160, 15, 1000, 50);
         layeredPane.add(family, JLayeredPane.PALETTE_LAYER);
 
-        // สถานะสมรส
-        JLabel status = new JLabel("สถานะสมรส");
-        status.setFont(new Font("Tahoma", Font.BOLD, 24));
-        status.setBounds(75, 100, 1000, 50);
-        layeredPane.add(status, JLayeredPane.PALETTE_LAYER);
-
-        // ลดหย่อนส่วนบุคคล
-        JLabel own = new JLabel("ลดหย่อนส่วนบุคคล");
-        own.setFont(new Font("Tahoma", Font.BOLD, 24));
-        own.setBounds(540, 100, 1000, 50);
-        layeredPane.add(own, JLayeredPane.PALETTE_LAYER);
-
-        // ล็อก ลดหย่อน 60000
-        JLabel discount = new JLabel("  60,000");
-        discount.setFont(new Font("Tahoma", Font.PLAIN, 24));
-        discount.setBounds(540, 155, 300, 45);
-        discount.setBackground(Color.LIGHT_GRAY);
-        Border border = BorderFactory.createLineBorder(Color.GRAY, 3);
-        discount.setBorder(border); // ตั้งกรอบให้ JLabel
-        discount.setOpaque(true);
-        layeredPane.add(discount, JLayeredPane.PALETTE_LAYER);
-
-        // เลือกสถานะ
-        String s1[] = { "  โสด", "  หย่า", "  คู่สมรสมีเงินได้", "  คู่สมรสไม่มีเงินได้" };
-        JComboBox chosestatus = new JComboBox(s1);
-        chosestatus.setFont(new Font("Tahoma", Font.PLAIN, 25));
-        chosestatus.setBounds(75, 155, 300, 45);
-        layeredPane.add(chosestatus, JLayeredPane.PALETTE_LAYER);
+        
 
         // ลดหย่อนบิดา-มารดา (ตนเอง)
         JLabel fathmoth = new JLabel("ลดหย่อนบิดา-มารดา (ตนเอง)");
@@ -76,8 +49,7 @@ public class Marriedhavekids implements ActionListener {
 
         // คนละ 30,000 บาท (บิดามารดาต้องมีอายุเกิน 60 ปี และมีเงินได้ไม่เกิน 30,000
         // บาทต่อปี) 
-        JLabel condition1 = new JLabel(
-                "คนละ 30,000 บาท (บิดามารดาต้องมีอายุเกิน 60 ปี และมีเงินได้ไม่เกิน 30,000 บาทต่อปี)");
+        JLabel condition1 = new JLabel("คนละ 30,000 บาท (บิดามารดาต้องมีอายุเกิน 60 ปี และมีเงินได้ไม่เกิน 30,000 บาทต่อปี)");
         condition1.setFont(new Font("Tahoma", Font.PLAIN, 11));
         condition1.setBounds(75, 275, 1000, 45);
         layeredPane.add(condition1, JLayeredPane.PALETTE_LAYER);
@@ -121,6 +93,7 @@ public class Marriedhavekids implements ActionListener {
         havePanel.setLayout(null);
         havePanel.setBounds(75, 325, 1000, 300);
         havePanel.setOpaque(false);
+        havePanel.setVisible(false);
         layeredPane.add(havePanel, JLayeredPane.PALETTE_LAYER);
 
         // บุตรคนที่ 2 เป็นต้นไป
@@ -147,11 +120,11 @@ public class Marriedhavekids implements ActionListener {
         son_after2561.setBounds(465, 30, 1000, 45); // เดิม (540, 355) ใน JFrame
         havePanel.add(son_after2561);
 
-        // ลดหย่อน 30,000 บาท
-        JLabel discount3_30000 = new JLabel("ลดหย่อน 30,000 บาท");
-        discount3_30000.setFont(new Font("Tahoma", Font.BOLD, 11));
-        discount3_30000.setBounds(800, 32, 500, 45); // เดิม (875, 357) ใน JFrame
-        havePanel.add(discount3_30000);
+        // ลดหย่อน 60,000 บาท
+        JLabel discount3_60000 = new JLabel("ลดหย่อน 60,000 บาท");
+        discount3_60000.setFont(new Font("Tahoma", Font.BOLD, 11));
+        discount3_60000.setBounds(800, 32, 500, 45); // เดิม (875, 357) ใน JFrame
+        havePanel.add(discount3_60000);
 
         // textfield ของบุตรก่อน2561
         JTextField text_before = new JTextField(" ");
@@ -166,10 +139,10 @@ public class Marriedhavekids implements ActionListener {
         havePanel.add(text_after);
 
         // ลดหย่อนผู้พิการหรือทุพพลภาพ (ไม่มีเงินได้)
-        JLabel disabled_no_money = new JLabel("ลดหย่อนผู้พิการหรือทุพพลภาพ (ไม่มีเงินได้)");
-        disabled_no_money.setFont(new Font("Tahoma", Font.BOLD, 24));
-        disabled_no_money.setBounds(0, 115, 1000, 45);
-        havePanel.add(disabled_no_money);
+        JLabel disabled_no_money1 = new JLabel("ลดหย่อนผู้พิการหรือทุพพลภาพ (ไม่มีเงินได้)");
+        disabled_no_money1.setFont(new Font("Tahoma", Font.BOLD, 24));
+        disabled_no_money1.setBounds(0, 115, 1000, 45);
+        havePanel.add(disabled_no_money1);
 
         // ปุ่มกลมพ่อแม่ญาติ
         JRadioButton father2 = new JRadioButton(" บิดา");
@@ -191,10 +164,10 @@ public class Marriedhavekids implements ActionListener {
         havePanel.add(cousin1);
 
         // ลดหย่อนผู้พิการหรือทุพพลภาพ (คู่สมรสไม่มีเงินได้)
-        JLabel disabled_married_no_money = new JLabel("ลดหย่อนผู้พิการหรือทุพพลภาพ (คู่สมรสไม่มีเงินได้)");
-        disabled_married_no_money.setFont(new Font("Tahoma", Font.BOLD, 24));
-        disabled_married_no_money.setBounds(0, 180, 1000, 45);
-        havePanel.add(disabled_married_no_money);
+        JLabel disabled_married_no_money1 = new JLabel("ลดหย่อนผู้พิการหรือทุพพลภาพ (คู่สมรสไม่มีเงินได้)");
+        disabled_married_no_money1.setFont(new Font("Tahoma", Font.BOLD, 24));
+        disabled_married_no_money1.setBounds(0, 180, 1000, 45);
+        havePanel.add(disabled_married_no_money1);
 
         // ปุ่มกลมบิดามารดาคู่สมรส
         JRadioButton father3 = new JRadioButton(" บิดา");
@@ -244,23 +217,23 @@ public class Marriedhavekids implements ActionListener {
         donthavePanel.add(disabled_no_money2);
 
         // ปุ่มกลมพ่อแม่ญาติ
-        JRadioButton father22 = new JRadioButton(" บิดา");
-        father22.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        father22.setBounds(25, 35, 150, 50); // เดิม (100, 360) ใน JFrame
-        father22.setOpaque(false);
-        donthavePanel.add(father22);
+        JRadioButton father4 = new JRadioButton(" บิดา");
+        father4.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        father4.setBounds(25, 35, 150, 50); // เดิม (100, 360) ใน JFrame
+        father4.setOpaque(false);
+        donthavePanel.add(father4);
 
-        JRadioButton mother22 = new JRadioButton(" มารดา");
-        mother22.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        mother22.setBounds(225, 35, 200, 50); // เดิม (300, 360) ใน JFrame
-        mother22.setOpaque(false);
-        donthavePanel.add(mother22);
+        JRadioButton mother4 = new JRadioButton(" มารดา");
+        mother4.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        mother4.setBounds(225, 35, 200, 50); // เดิม (300, 360) ใน JFrame
+        mother4.setOpaque(false);
+        donthavePanel.add(mother4);
 
-        JRadioButton cousin12 = new JRadioButton(" ญาติ(พี่ น้อง ฯลฯ)");
-        cousin12.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        cousin12.setBounds(425, 35, 500, 50); // เดิม (500, 360) ใน JFrame
-        cousin12.setOpaque(false);
-        donthavePanel.add(cousin12);
+        JRadioButton cousin2 = new JRadioButton(" ญาติ(พี่ น้อง ฯลฯ)");
+        cousin2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        cousin2.setBounds(425, 35, 500, 50); // เดิม (500, 360) ใน JFrame
+        cousin2.setOpaque(false);
+        donthavePanel.add(cousin2);
 
         // ลดหย่อนผู้พิการหรือทุพพลภาพ (คู่สมรสไม่มีเงินได้)
         JLabel disabled_married_no_money2 = new JLabel("ลดหย่อนผู้พิการหรือทุพพลภาพ (คู่สมรสไม่มีเงินได้)");
@@ -269,23 +242,23 @@ public class Marriedhavekids implements ActionListener {
         donthavePanel.add(disabled_married_no_money2);
 
         // ปุ่มกลมบิดามารดาคู่สมรส
-        JRadioButton father32 = new JRadioButton(" บิดา");
-        father32.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        father32.setBounds(25, 110, 150, 50); // เดิม (100, 430) ใน JFrame
-        father32.setOpaque(false);
-        donthavePanel.add(father32);
+        JRadioButton father5 = new JRadioButton(" บิดา");
+        father5.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        father5.setBounds(25, 110, 150, 50); // เดิม (100, 430) ใน JFrame
+        father5.setOpaque(false);
+        donthavePanel.add(father5);
 
-        JRadioButton mother32 = new JRadioButton(" มารดา");
-        mother32.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        mother32.setBounds(225, 110, 200, 50); // เดิม (300, 430) ใน JFrame
-        mother32.setOpaque(false);
-        donthavePanel.add(mother32);
+        JRadioButton mother5 = new JRadioButton(" มารดา");
+        mother5.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        mother5.setBounds(225, 110, 200, 50); // เดิม (300, 430) ใน JFrame
+        mother5.setOpaque(false);
+        donthavePanel.add(mother5);
 
-        JRadioButton married12 = new JRadioButton(" คู่สมรส");
-        married12.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        married12.setBounds(425, 110, 500, 50); // เดิม (500, 430) ใน JFrame
-        married12.setOpaque(false);
-        donthavePanel.add(married12);
+        JRadioButton married2 = new JRadioButton(" คู่สมรส");
+        married2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        married2.setBounds(425, 110, 500, 50); // เดิม (500, 430) ใน JFrame
+        married2.setOpaque(false);
+        donthavePanel.add(married2);
 
         // กรณีบิดา, มารดา, คู่สมรส, บิดาคู่สมรส , มารดาคู่สมรส และบุตรของตนเอง
         JLabel condition5 = new JLabel("กรณีบิดา, มารดา, คู่สมรส, บิดาคู่สมรส , มารดาคู่สมรส และบุตรของตนเอง");
@@ -299,8 +272,6 @@ public class Marriedhavekids implements ActionListener {
         condition6.setFont(new Font("Tahoma", Font.PLAIN, 11));
         condition6.setBounds(0, 155, 1000, 45);
         donthavePanel.add(condition6);
-
-
 
         have.addActionListener(new ActionListener() {
             @Override
