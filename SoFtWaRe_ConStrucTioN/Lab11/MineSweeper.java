@@ -3,7 +3,7 @@ import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 
-public class Mine extends JFrame {
+public class MineSweeper extends JFrame {
 	private int row;
 	private int col;
 	private JButton[][] buttons;
@@ -63,7 +63,7 @@ public class Mine extends JFrame {
 
 	}
 
-	public Mine(String title, int row, int col) {
+	public MineSweeper(String title, int row, int col) {
 		super(title);
 		this.col = col;
 		this.row = row;
@@ -106,7 +106,7 @@ public class Mine extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new Mine("Mine Sweeper", 10, 10);
+		new MineSweeper("Mine Sweeper", 10, 10);
 	}
 
 }
