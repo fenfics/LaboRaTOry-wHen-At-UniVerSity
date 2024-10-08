@@ -397,7 +397,7 @@ public class Page16 extends JPanel {
             if (totalValue > newAf) {
                 // ถ้าเกิน newAf ให้ปรับค่าช่องสุดท้ายที่ถูกแก้ไขให้พอดีกับ newAf
                 int diff = totalValue - newAf;
-               if (f3.isFocusOwner() || (!f1.getText().isEmpty() && !f2.getText().isEmpty() && f3.getText().isEmpty())) {
+                if (f3.isFocusOwner() || (!f1.getText().isEmpty() && !f2.getText().isEmpty() && f3.getText().isEmpty())) {
                     valueF3 = Math.max(0, valueF3 - diff);
                     f3.setText(String.valueOf(valueF3));
                 } else if (f2.isFocusOwner() || (!f1.getText().isEmpty() && f2.getText().isEmpty())) {
@@ -426,7 +426,7 @@ public class Page16 extends JPanel {
             }else if(difference >2000000 && difference <=5000000){
                 newTax = (int) ((difference-2000000)*0.30+ (1000000*0.25)+ (250000 * 0.20) + (200000 * 0.15) +(200000 * 0.10) + (150000 * 0.05)+(150000 * 0.05));  
             }else if(difference >5000000){
-                newTax = (int) ((difference-5000000)*0.35+(3000000 * 0.30) +(1000000 * 0.25) +(250000 * 0.20) +(200000 * 0.15) +(200000 * 0.10) +(150000 * 0.05)+ (150000 * 0.05));
+                newTax = (int) ((difference-5000000)*0.35+(3000000 * 0.30) +(1000000 * 0.25) +(250000 * 0.20) +(200000 * 0.15) +(200000 * 0.10) +(150000 * 0.05));
             }
             setamount5(String.valueOf(newTax));
             TotalTaxaftercal = Tax-newTax;
@@ -459,8 +459,7 @@ public class Page16 extends JPanel {
             Tax = (int) ((netIncome-5000000)*0.35+(3000000 * 0.30) +(1000000 * 0.25) +(250000 * 0.20) +(200000 * 0.15) +(200000 * 0.10) +(150000 * 0.05)+ (150000 * 0.05));
         }
        }
-
-       private static class DisplayGraphics extends JPanel {
+private static class DisplayGraphics extends JPanel {
 
         public DisplayGraphics() {
             setOpaque(false); // Set this to false so the background color of Login can be seen

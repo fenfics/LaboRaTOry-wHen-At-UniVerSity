@@ -246,14 +246,19 @@ public class Page12 extends JPanel {
             }
         }
 
-        class DisplayGraphics extends JPanel {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                setOpaque(false);
-                Graphics2D g2d = (Graphics2D) g;
-                g2d.setColor(Color.decode("#6390BA"));
-                g2d.setStroke(new BasicStroke(7));
-                g.drawLine(0, 90, 1133, 90);
-            }
-        }
+       class DisplayGraphics extends JPanel {
+
+    public DisplayGraphics() {
+        setOpaque(false); // Set this to false so the background color of Login can be seen
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        // Draw the line with a transparent background
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(Color.decode("#6390BA"));
+        g2d.setStroke(new BasicStroke(7));
+        g.drawLine(0, 90, 1133, 90);
+    }
+}

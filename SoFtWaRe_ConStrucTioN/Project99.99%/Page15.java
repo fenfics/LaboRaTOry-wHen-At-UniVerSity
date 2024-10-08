@@ -304,7 +304,7 @@ public class Page15 extends JPanel {
         updateMinilabel3(String.valueOf(TotalDeduction));
         int DeductionStillleft = maxFunds-TotalDeduction;
         updateMinilabel4(String.valueOf(DeductionStillleft));
-        int netIncomeCalculated = salaryAfterExpenses - totalDeduction - totalValue - getTotalValue - ToTalValue3;
+        netIncomeCalculated = salaryAfterExpenses - totalDeduction - totalValue - getTotalValue - ToTalValue3;
         // คำนวณภาษีที่ต้องจ่าย
         if (netIncome < 150000) {
             tax = 0; // ไม่ต้องเสียภาษี
@@ -383,14 +383,19 @@ public class Page15 extends JPanel {
         System.out.println("F4value in page15:" +F4value);
     }
     }
-    class DisplayGraphics extends JPanel {
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            setOpaque(false);
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.setColor(Color.decode("#6390BA"));
-            g2d.setStroke(new BasicStroke(7));
-            g.drawLine(0, 90, 1133, 90);
-        }
+class DisplayGraphics extends JPanel {
+
+    public DisplayGraphics() {
+        setOpaque(false); // Set this to false so the background color of Login can be seen
     }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        // Draw the line with a transparent background
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(Color.decode("#6390BA"));
+        g2d.setStroke(new BasicStroke(7));
+        g.drawLine(0, 90, 1133, 90);
+    }
+}

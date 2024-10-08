@@ -1,8 +1,18 @@
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class Page17 extends JPanel {
 
@@ -37,7 +47,7 @@ public class Page17 extends JPanel {
          button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainApp.showPage("Home");
+                mainApp.showPage("HOME");
             }
         });
         layeredPane.add(button, JLayeredPane.PALETTE_LAYER);
@@ -56,6 +66,7 @@ public class Page17 extends JPanel {
             }
         });
 
+        // ปุ่ม NEXT
         JButton button2 = new JButton("FINISH");
         button2.setBackground(Color.decode("#A5CBB0"));
         button2.setForeground(Color.WHITE);
@@ -187,36 +198,14 @@ public class Page17 extends JPanel {
         amount2.setBounds(820, 450, 500, 100); //ปรับ widthเพื่อให้ sizeข้อความใหญ่ขึ้น
         amount2.setFont(new Font("Tahoma", Font.BOLD, 24));
         layeredPane.add(amount2, JLayeredPane.PALETTE_LAYER);
-
-        JLabel label7 = new JLabel("ภาษีที่ต้องจ่ายหลังลงทุน");
-        label7.setBounds(750, 600, 300, 50); //ปรับ widthเพื่อให้ sizeข้อความใหญ่ขึ้น
-        label7.setFont(new Font("Tahoma", Font.BOLD, 20));
-        layeredPane.add(label7, JLayeredPane.PALETTE_LAYER);
-
-        amount3 = new JLabel("0");
-        amount3.setBounds(770, 610, 500, 100); //ปรับ widthเพื่อให้ sizeข้อความใหญ่ขึ้น
-        amount3.setFont(new Font("Tahoma", Font.BOLD, 20));
-        layeredPane.add(amount3, JLayeredPane.PALETTE_LAYER);
-
-        JLabel label8 = new JLabel("บาท");
-        label8.setBounds(880, 635, 500, 50); //ปรับ widthเพื่อให้ sizeข้อความใหญ่ขึ้น
-        label8.setFont(new Font("Tahoma", Font.BOLD, 20));
-        layeredPane.add(label8, JLayeredPane.PALETTE_LAYER);
         add(layeredPane);
     }
-
     public void setAmount(String value) {
         amount.setText(value);
     }
-
     public void setAmount2(String value) {
         amount2.setText(value);
     }
-
-    public void setAmount3(String value) {
-        amount3.setText(value);
-    }
-
     public void getNet(int netIncome) {
         this.netIncome=netIncome;
         int Maxdonate = netIncome - 800000;
@@ -227,38 +216,42 @@ public class Page17 extends JPanel {
         RllyLastTax = (int) (FinalTax * 0.10);
         int DonateMax = Maxdonate - (donationAmount * 2) - RllyLastTax;
         if (DonateMax < 150000) {
-            DonateMax2 = 0; // ไม่ต้องเสียภาษี
+            DonateMax = 0; // ไม่ต้องเสียภาษี
         } else if (DonateMax > 150000 && DonateMax <= 300000) {
-            DonateMax2 = (int) ((DonateMax - 150000) * 0.05); // คำนวณภาษี 5%
+            DonateMax = (int) ((DonateMax - 150000) * 0.05); // คำนวณภาษี 5%
         } else if (DonateMax > 300000 && DonateMax <= 500000) {
-            DonateMax2 = (int) ((DonateMax - 300000) * 0.10 + (150000 * 0.05)); // คำนวณภาษี 10% //(150000 * 0.05)=7500
+            DonateMax = (int) ((DonateMax - 300000) * 0.10 + (150000 * 0.05)); // คำนวณภาษี 10% //(150000 * 0.05)=7500
         } else if (DonateMax > 500000 && DonateMax <= 750000) {
-            DonateMax2 = (int) ((DonateMax - 500000) * 0.15 + (200000 * 0.10) + (150000 * 0.05)); // คำนวณภาษี 15% //200000*0.10-จะได้2หมื่นและนำ(150000 * 0.05)มาใช้ 
+            DonateMax = (int) ((DonateMax - 500000) * 0.15 + (200000 * 0.10) + (150000 * 0.05)); // คำนวณภาษี 15% //200000*0.10-จะได้2หมื่นและนำ(150000 * 0.05)มาใช้ 
         } else if (DonateMax > 750000 && DonateMax <= 1000000) {
-            DonateMax2 = (int) ((DonateMax - 750000) * 0.20 + (250000 * 0.15) + (200000 * 0.10) + (150000 * 0.05)); // คำนวณภาษี 20% //(250000 * 0.15)=37500
+            DonateMax = (int) ((DonateMax - 750000) * 0.20 + (250000 * 0.15) + (200000 * 0.10) + (150000 * 0.05)); // คำนวณภาษี 20% //(250000 * 0.15)=37500
         } else if (DonateMax > 1000000 && DonateMax <= 2000000) {
-            DonateMax2 = (int) ((netIncome - 1000000) * 0.25 + (250000 * 0.20) + (200000 * 0.15) + (200000 * 0.10) + (150000 * 0.05) + (150000 * 0.05));
+            DonateMax = (int) ((DonateMax - 1000000) * 0.25 + (250000 * 0.20) + (200000 * 0.15) + (200000 * 0.10) + (150000 * 0.05) + (150000 * 0.05));
         } else if (DonateMax > 2000000 && DonateMax <= 5000000) {
-            DonateMax2 = (int) ((netIncome - 2000000) * 0.30 + (1000000 * 0.25) + (250000 * 0.20) + (200000 * 0.15) + (200000 * 0.10) + (150000 * 0.05) + (150000 * 0.05));
+            DonateMax = (int) ((DonateMax - 2000000) * 0.30 + (1000000 * 0.25) + (250000 * 0.20) + (200000 * 0.15) + (200000 * 0.10) + (150000 * 0.05) + (150000 * 0.05));
         } else if (DonateMax > 5000000) {
-            DonateMax2 = (int) ((DonateMax - 5000000) * 0.35 + (3000000 * 0.30) + (1000000 * 0.25) + (250000 * 0.20) + (200000 * 0.15) + (200000 * 0.10) + (150000 * 0.05) + (150000 * 0.05));
+            DonateMax = (int) ((DonateMax - 5000000) * 0.35 + (3000000 * 0.30) + (1000000 * 0.25) + (250000 * 0.20) + (200000 * 0.15) + (200000 * 0.10) + (150000 * 0.05) + (150000 * 0.05));
         }
-        setAmount(String.valueOf(DonateMax2));
+        setAmount(String.valueOf(DonateMax));
     }
 
     public void getTax(int tax) {
         int NewTax = tax - DonateMax2;
         int TaxAfterReduce = tax - DonateMax2;
-        setAmount3(String.valueOf(TaxAfterReduce));
         setAmount2(String.valueOf(NewTax));
     }
 }
 
 class DisplayGraphics extends JPanel {
+
+    public DisplayGraphics() {
+        setOpaque(false); // Set this to false so the background color of Login can be seen
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        setOpaque(false);
+        // Draw the line with a transparent background
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.decode("#6390BA"));
         g2d.setStroke(new BasicStroke(7));
