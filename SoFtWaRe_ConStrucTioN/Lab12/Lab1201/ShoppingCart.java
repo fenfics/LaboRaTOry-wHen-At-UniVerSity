@@ -62,8 +62,7 @@ public class ShoppingCart {
         double total = 0;
         System.out.printf("%-15s %-10s %-10s %-10s%n", "Item Name", "Unit Price", "Quantity", "Total Price");
         for (Item item : cart) {
-            System.out.printf("%-15s $%.2f %10d %10.2f%n", 
-                              item.getName(), item.getPrice(), item.getQuantity(), item.getTotalPrice());
+            System.out.printf("%-15s $%.2f %10d "+"\t$"+ "%10.2f%n", item.getName(), item.getPrice(), item.getQuantity(), item.getTotalPrice());
             total += item.getTotalPrice();
         }
         System.out.printf("Total $ Amount in Cart: $%.2f%n", total);
