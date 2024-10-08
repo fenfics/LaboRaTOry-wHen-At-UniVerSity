@@ -1,17 +1,12 @@
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
+import java.awt.*;
+import java.util.List;
+import java.awt.event.*;
+import java.util.ArrayList;
+import javax.swing.*;
 import java.io.*;
 import java.util.*;
+
+
 public class Page15 extends JPanel {
     private MainApplication mainApp;
     private JLabel minilabel1,minilabel2;
@@ -27,6 +22,8 @@ public class Page15 extends JPanel {
     private String username;
     private String year,bonus,anothersalary;
     private int salaryyear;
+     private int netIncomeCalculated;
+    private int F4value;
     public Page15(MainApplication mainApp) {
         this.mainApp = mainApp;
         setLayout(null);
@@ -48,7 +45,7 @@ public class Page15 extends JPanel {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainApp.showPage("HOME");
+                mainApp.showPage("Home");
             }
         });
         layeredPane.add(button, JLayeredPane.PALETTE_LAYER);
@@ -76,8 +73,8 @@ public class Page15 extends JPanel {
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainApp.sendNetIncomeCalculated(netIncome);
-                mainApp.sendNetIncomeCalculatedPage17(netIncome);
+                mainApp.sendNetIncomeCalculatedPage16(netIncomeCalculated);
+                mainApp.sendNettoPage17(netIncomeCalculated);
                 mainApp.sendTaxtoPage17(tax);
                 mainApp.sendTaxTopage16(tax);
                 mainApp.showPage("page16");
@@ -303,7 +300,7 @@ public class Page15 extends JPanel {
         updateMinilabel34(String.valueOf(ToTalValue3));
         this.netIncome = netIncome;
         //ลดหย่อนไปได้ทั้งหมด จาก ครอบครัว,กองทุน,ประกัน,กองทุนอื่นๆ
-        int TotalDeduction = totalDeduction + totalValue + getTotalValue + ToTalValue3;
+        int TotalDeduction = totalDeduction + totalValue + getTotalValue + ToTalValue3+F4value;
         updateMinilabel3(String.valueOf(TotalDeduction));
         int DeductionStillleft = maxFunds-TotalDeduction;
         updateMinilabel4(String.valueOf(DeductionStillleft));
@@ -324,14 +321,14 @@ public class Page15 extends JPanel {
         }else if(netIncome >2000000 && netIncome <=5000000){
             tax = (int) ((netIncome-2000000)*0.30+ (1000000*0.25)+ (250000 * 0.20) + (200000 * 0.15) +(200000 * 0.10) + (150000 * 0.05)+(150000 * 0.05));  
         }else if(netIncome >5000000){
-            tax = (int) ((netIncome-5000000)*0.35+(3000000 * 0.30) +(1000000 * 0.25) +(250000 * 0.20) +(200000 * 0.15) +(200000 * 0.10) +(150000 * 0.05));
+            tax = (int) ((netIncome-5000000)*0.35+(3000000 * 0.30) +(1000000 * 0.25) +(250000 * 0.20) +(200000 * 0.15) +(200000 * 0.10) +(150000 * 0.05)+ (150000 * 0.05));
         }
         setMinilabel2Value(String.valueOf(tax));
         updateMinilabel1(String.valueOf(netIncomeCalculated));
         System.out.println("Total otherFunds:" +ToTalValue3);
         System.out.println("Total tax: " + tax);
        
-       try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+       try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 // ตรวจสอบว่าชื่อผู้ใช้อยู่ในบรรทัดนี้หรือไม่
@@ -357,7 +354,7 @@ public class Page15 extends JPanel {
         }
 
         // เขียนข้อมูลทั้งหมดกลับไปที่ไฟล์
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"))) {
             for (String line : lines) {
                 writer.write(line);
                 writer.newLine();
@@ -371,7 +368,7 @@ public class Page15 extends JPanel {
         this.username=username;
         System.out.println(username);
     }
-    public void getData(String year,int salaryyear,String bonus,String anothersalary){
+     public void getData(String year,int salaryyear,String bonus,String anothersalary){
         this.year=year;
         this.salaryyear=salaryyear;
         this.bonus=bonus;
@@ -381,14 +378,19 @@ public class Page15 extends JPanel {
         System.out.println(bonus);
         System.out.println(anothersalary);
     }
+    public void getF4value(int value){
+        this.F4value = value;
+        System.out.println("F4value in page15:" +F4value);
     }
-class DisplayGraphics extends JPanel {
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        setOpaque(false);
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(Color.decode("#6390BA"));
-        g2d.setStroke(new BasicStroke(7));
-        g.drawLine(0, 90, 1133, 90);
     }
-}
+    class DisplayGraphics extends JPanel {
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            setOpaque(false);
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setColor(Color.decode("#6390BA"));
+            g2d.setStroke(new BasicStroke(7));
+            g.drawLine(0, 90, 1133, 90);
+        }
+    }

@@ -43,7 +43,7 @@ public class Page14 extends JPanel {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainApp.showPage("HOME");
+                mainApp.showPage("Home");
             }
         });
         layeredPane.add(button, JLayeredPane.PALETTE_LAYER);
@@ -68,15 +68,17 @@ public class Page14 extends JPanel {
         button2.setForeground(Color.WHITE);
         button2.setBounds(587, 622, 120, 50);
         button2.setFont(new Font("Tahoma", Font.BOLD, 20));
-        button2.addActionListener(new ActionListener() {
+         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int TotalValue3 = getTotalValue2();
                 // คำนวณ netIncome
                 int netIncome = salaryAfterExpenses - totalDeduction - totalValue - alltotalValue - TotalValue3;
                 // ส่งค่าทั้งหมดไปยัง Page15
-                mainApp.sendValuesToPage15(salaryAfterExpenses, totalDeduction, totalValue, alltotalValue, TotalValue3,
-                        netIncome);
+                int remainingFromFiveHundredThousand = 500000 - TotalValue3;
+                mainApp.sendbeartoPage16(TotalValue3);
+                mainApp.sendValuesToPage15(salaryAfterExpenses, totalDeduction, totalValue, alltotalValue, TotalValue3, netIncome);
+                mainApp.sendRemainfor500K(remainingFromFiveHundredThousand);    
                 mainApp.showPage("page15");
             }
         });
@@ -206,33 +208,6 @@ public class Page14 extends JPanel {
 
         add(layeredPane);
     }
-
-    // private void updateContribution() {
-    // int sum = 0;
-    // int page12Contribution = mainApp.getTotalContribution(); // ดึงค่าที่กรอกจาก
-    // Page12
-
-    // // ดึงค่าจากฟิลด์ f, f2, f3
-    // int currentValueF = parseValue(f);
-    // int currentValueF2 = parseValue(f2);
-    // int currentValueF3 = parseValue(f3);
-
-    // // รวมค่าจาก Page12, Page13 (f4) และฟิลด์ใน Page14
-    // sum = currentValueF + currentValueF2 + currentValueF3 + f4ValueFromPage13;
-
-    // // ตรวจสอบยอดรวมทั้งหมดกับข้อจำกัด 500,000
-    // if (sum > maxLimit) {
-    // int remaining = maxLimit - page12Contribution - currentValueF2 -
-    // currentValueF3 - f4ValueFromPage13;
-    // if (remaining < 0) remaining = 0;
-
-    // // จำกัดค่าที่สามารถกรอกได้ในฟิลด์ปัจจุบัน
-    // f.setText(String.valueOf(remaining));
-    // }
-
-    // // อัปเดตค่ารวมไปยัง MainApplication
-    // mainApp.updateTotalContribution(sum);
-    // }
     public int getTotalValue2() {
         int value1 = parseValue(f);
         int value2 = parseValue(f2);

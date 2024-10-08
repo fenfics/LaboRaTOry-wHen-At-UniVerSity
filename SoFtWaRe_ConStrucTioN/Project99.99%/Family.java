@@ -25,18 +25,19 @@ public class Family extends JPanel {
     // ตัวแปร ใน marriedHaveMoneyPanel
     private JRadioButton MHM_father1, MHM_mother1, MHM_havekid, MHM_donthavekid, MHM_father2, MHM_mother2, MHM_cousin1,
             MHM_son, MHM_father3, MHM_mother3, MHM_married1, MHM_father4, MHM_mother4, MHM_cousin2, MHM_father5,
-            MHM_mother5, MHM_married2;
+            MHM_mother5, MHM_married2, MHM_marriedFather, MHM_marriedMother;
     private JPanel MHM_haveKidPanel, MHM_dontHaveKidPanel;
     private JTextField MHM_text_before, MHM_text_after;
 
     // ตัวแปร ใน marriedDontHaveMoneyPanel
     private JRadioButton MDHM_father1, MDHM_mother1, MDHM_havekid, MDHM_donthavekid, MDHM_father2, MDHM_mother2,
             MDHM_son, MDHM_cousin1, MDHM_father3, MDHM_mother3, MDHM_married1, MDHM_father4, MDHM_mother4, MDHM_cousin2,
-            MDHM_father5, MDHM_mother5, MDHM_married2;
+            MDHM_father5, MDHM_mother5, MDHM_married2, MDHM_marriedFather, MDHM_marriedMother;
     private JPanel MDHM_haveKidPanel, MDHM_dontHaveKidPanel;
     private JTextField MDHM_text_before, MDHM_text_after;
 
     private int Salaryyear;
+
 
     public Family(MainApplication mainApp) {
         this.mainApp = mainApp;
@@ -185,10 +186,14 @@ public class Family extends JPanel {
                 resetPanel(marriedHaveMoneyPanel);
                 resetPanel(marriedDontHaveMoneyPanel);
 
-                // ตั้งค่าใหม่สำหรับ totalDeductionField
-                totalDeductionField.setText("60,000");
-
                 String selectedStatus = (String) chosestatus.getSelectedItem();
+
+                // ตั้งค่าเบื้องต้นสำหรับยอดลดหย่อน
+                if ("คู่สมรสไม่มีเงินได้".equals(selectedStatus)) {
+                    totalDeductionField.setText("120,000");
+                } else {
+                    totalDeductionField.setText("60,000");
+                }
 
                 // แสดงเฉพาะพาเนลที่เลือก
                 singlePanel.setVisible("โสด".equals(selectedStatus));
@@ -568,10 +573,29 @@ public class Family extends JPanel {
         MHM_condition2.setBounds(75, 75, 1000, 45);
         panelMHM.add(MHM_condition2);
 
+        // ลดหย่อนบิดา-มารดา (คู่สมรส)
+        JLabel MHM_marriedFathmoth = new JLabel("ลดหย่อนบิดา-มารดา (คู่สมรส)");
+        MHM_marriedFathmoth.setFont(new Font("Tahoma", Font.BOLD, 24));
+        MHM_marriedFathmoth.setBounds(540, 0, 500, 45);
+        panelMHM.add(MHM_marriedFathmoth);
+
+        // ปุ่มกลมพ่อแม่ (คู่สมรส)
+        MHM_marriedFather = new JRadioButton(" บิดา");
+        MHM_marriedFather.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        MHM_marriedFather.setBounds(565, 30, 90, 50);
+        MHM_marriedFather.setOpaque(false);
+        panelMHM.add(MHM_marriedFather);
+
+        MHM_marriedMother = new JRadioButton(" มารดา");
+        MHM_marriedMother.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        MHM_marriedMother.setBounds(765, 30, 90, 50);
+        MHM_marriedMother.setOpaque(false);
+        panelMHM.add(MHM_marriedMother);
+
         // บุตรคนที่ 1 (เกิดปีใดก็ตาม)
         JLabel MHM_son_1 = new JLabel("บุตรคนที่ 1 (เกิดปีใดก็ตาม)");
         MHM_son_1.setFont(new Font("Tahoma", Font.BOLD, 24));
-        MHM_son_1.setBounds(540, 0, 500, 45);
+        MHM_son_1.setBounds(540, 60, 500, 45);
         panelMHM.add(MHM_son_1);
 
         // ปุ่มเลือกบุตร1
@@ -582,18 +606,18 @@ public class Family extends JPanel {
         bg.add(MHM_havekid);
 
         MHM_havekid.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        MHM_havekid.setBounds(565, 30, 150, 50);
+        MHM_havekid.setBounds(565, 90, 150, 50);
         MHM_havekid.setOpaque(false);
         panelMHM.add(MHM_havekid);
         MHM_donthavekid.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        MHM_donthavekid.setBounds(765, 30, 150, 50);
+        MHM_donthavekid.setBounds(765, 90, 150, 50);
         MHM_donthavekid.setOpaque(false);
         panelMHM.add(MHM_donthavekid);
 
         // ลดหย่อน 30,000 บาท
         JLabel MHM_discount_30000 = new JLabel("ลดหย่อน 30,000 บาท");
         MHM_discount_30000.setFont(new Font("Tahoma", Font.BOLD, 11));
-        MHM_discount_30000.setBounds(855, 5, 500, 45);
+        MHM_discount_30000.setBounds(855, 65, 500, 45);
         panelMHM.add(MHM_discount_30000);
 
         // สร้าง JPanel สำหรับเก็บคอมโพเนนต์ที่จะแสดงเมื่อเลือก "มี"
@@ -795,25 +819,31 @@ public class Family extends JPanel {
     private JPanel createMarriedDontHaveMoneyPanel() {
         JPanel MDHMpanel = new JPanel();
         MDHMpanel.setLayout(null);
-        MDHMpanel.setBounds(0, 220, 1133, 744);
+        MDHMpanel.setBounds(0, 200, 1133, 744);
         MDHMpanel.setOpaque(false);
+
+        // ลดหย่อนคู่สมรสไม่มีรายได้ 60,000 บาท
+        JLabel marriednomoney = new JLabel("ลดหย่อนคู่สมรสไม่มีรายได้ 60,000 บาท");
+        marriednomoney.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        marriednomoney.setBounds(75, 0, 300, 20);
+        MDHMpanel.add(marriednomoney);
 
         // ลดหย่อนบิดา-มารดา (ตนเอง)
         JLabel MDHM_fathmoth = new JLabel("ลดหย่อนบิดา-มารดา (ตนเอง)");
         MDHM_fathmoth.setFont(new Font("Tahoma", Font.BOLD, 24));
-        MDHM_fathmoth.setBounds(75, 0, 500, 45);
+        MDHM_fathmoth.setBounds(75, 10, 500, 45);
         MDHMpanel.add(MDHM_fathmoth);
 
         // ปุ่มกลมพ่อแม่
         MDHM_father1 = new JRadioButton(" บิดา");
         MDHM_father1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        MDHM_father1.setBounds(100, 30, 90, 50);
+        MDHM_father1.setBounds(100, 40, 90, 50);
         MDHM_father1.setOpaque(false);
         MDHMpanel.add(MDHM_father1);
 
         MDHM_mother1 = new JRadioButton(" มารดา");
         MDHM_mother1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        MDHM_mother1.setBounds(300, 30, 90, 50);
+        MDHM_mother1.setBounds(300, 40, 90, 50);
         MDHM_mother1.setOpaque(false);
         MDHMpanel.add(MDHM_mother1);
 
@@ -822,19 +852,38 @@ public class Family extends JPanel {
         JLabel MDHM_condition1 = new JLabel(
                 "คนละ 30,000 บาท (บิดามารดาต้องมีอายุเกิน 60 ปี และมีเงินได้ไม่เกิน 30,000 บาทต่อปี)");
         MDHM_condition1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        MDHM_condition1.setBounds(75, 60, 1000, 45);
+        MDHM_condition1.setBounds(75, 70, 1000, 45);
         MDHMpanel.add(MDHM_condition1);
 
         // (ได้ทั้งบิดา มารดาของตนเอง และคู่สมรส)
         JLabel MDHM_condition2 = new JLabel("(ได้ทั้งบิดา มารดาของตนเอง และคู่สมรส)");
         MDHM_condition2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        MDHM_condition2.setBounds(75, 75, 1000, 45);
+        MDHM_condition2.setBounds(75, 85, 1000, 45);
         MDHMpanel.add(MDHM_condition2);
+
+        // ลดหย่อนบิดา-มารดา (คู่สมรส)
+        JLabel MDHM_marriedFathmoth = new JLabel("ลดหย่อนบิดา-มารดา (คู่สมรส)");
+        MDHM_marriedFathmoth.setFont(new Font("Tahoma", Font.BOLD, 24));
+        MDHM_marriedFathmoth.setBounds(540, 0, 500, 45);
+        MDHMpanel.add(MDHM_marriedFathmoth);
+
+        // ปุ่มกลมพ่อแม่ (คู่สมรส)
+        MDHM_marriedFather = new JRadioButton(" บิดา");
+        MDHM_marriedFather.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        MDHM_marriedFather.setBounds(565, 30, 90, 50);
+        MDHM_marriedFather.setOpaque(false);
+        MDHMpanel.add(MDHM_marriedFather);
+
+        MDHM_marriedMother = new JRadioButton(" มารดา");
+        MDHM_marriedMother.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        MDHM_marriedMother.setBounds(765, 30, 90, 50);
+        MDHM_marriedMother.setOpaque(false);
+        MDHMpanel.add(MDHM_marriedMother);
 
         // บุตรคนที่ 1 (เกิดปีใดก็ตาม)
         JLabel MDHM_son_1 = new JLabel("บุตรคนที่ 1 (เกิดปีใดก็ตาม)");
         MDHM_son_1.setFont(new Font("Tahoma", Font.BOLD, 24));
-        MDHM_son_1.setBounds(540, 0, 500, 45);
+        MDHM_son_1.setBounds(540, 60, 500, 45);
         MDHMpanel.add(MDHM_son_1);
 
         // ปุ่มเลือกบุตร1
@@ -845,18 +894,18 @@ public class Family extends JPanel {
         bg.add(MDHM_havekid);
 
         MDHM_havekid.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        MDHM_havekid.setBounds(565, 30, 150, 50);
+        MDHM_havekid.setBounds(565, 90, 150, 50);
         MDHM_havekid.setOpaque(false);
         MDHMpanel.add(MDHM_havekid);
         MDHM_donthavekid.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        MDHM_donthavekid.setBounds(765, 30, 150, 50);
+        MDHM_donthavekid.setBounds(765, 90, 150, 50);
         MDHM_donthavekid.setOpaque(false);
         MDHMpanel.add(MDHM_donthavekid);
 
         // ลดหย่อน 30,000 บาท
         JLabel MDHM_discount_30000 = new JLabel("ลดหย่อน 30,000 บาท");
         MDHM_discount_30000.setFont(new Font("Tahoma", Font.BOLD, 11));
-        MDHM_discount_30000.setBounds(855, 5, 500, 45);
+        MDHM_discount_30000.setBounds(855, 65, 500, 45);
         MDHMpanel.add(MDHM_discount_30000);
 
         // สร้าง JPanel สำหรับเก็บคอมโพเนนต์ที่จะแสดงเมื่อเลือก "มี"
@@ -1072,15 +1121,20 @@ public class Family extends JPanel {
         }
     }
 
-    // อัพเดตยอดลดหย่อนรวม
-    private void updateTotalDeduction() {
+     // อัพเดตยอดลดหย่อนรวม
+     private void updateTotalDeduction() {
         int totalDeduction = 60000; // ค่าลดหย่อนส่วนบุคคลพื้นฐาน
         totalDeduction += calculateChildDeduction();
         totalDeduction += calculateParentDeduction();
         totalDeduction += calculateDisabledPersonDeduction();
-
         totalDeductionField.setText(String.format("%,d", totalDeduction));
-
+    }
+    private void updateTotalDeductionForMDHM() {
+        int totalDeduction = 120000; // ค่าลดหย่อนส่วนบุคคลพื้นฐาน
+        totalDeduction += calculateChildDeduction();
+        totalDeduction += calculateParentDeduction();
+        totalDeduction += calculateDisabledPersonDeduction();
+        totalDeductionField.setText(String.format("%,d", totalDeduction));
     }
 
     // คำนวณบุตรคนที่ 1 (เกิดปีใดก็ตาม)
@@ -1125,7 +1179,7 @@ public class Family extends JPanel {
         if (divorce_mother1.isSelected()) {
             parentDeduction += 30000;
         }
-
+        
         // Single
         if (single_father1.isSelected()) {
             parentDeduction += 30000;
@@ -1133,7 +1187,7 @@ public class Family extends JPanel {
         if (single_mother1.isSelected()) {
             parentDeduction += 30000;
         }
-
+        
         // Married Have Money
         if (MHM_mother1.isSelected()) {
             parentDeduction += 30000;
@@ -1141,12 +1195,24 @@ public class Family extends JPanel {
         if (MHM_father1.isSelected()) {
             parentDeduction += 30000;
         }
-
+        if (MHM_marriedFather.isSelected()) {
+            parentDeduction += 30000;
+        }
+        if (MHM_marriedMother.isSelected()) {
+            parentDeduction += 30000;
+        }
+        
         // Married Dont Have Money
         if (MDHM_mother1.isSelected()) {
             parentDeduction += 30000;
         }
         if (MDHM_father1.isSelected()) {
+            parentDeduction += 30000;
+        }
+        if (MDHM_marriedFather.isSelected()) {
+            parentDeduction += 30000;
+        }
+        if (MDHM_marriedMother.isSelected()) {
             parentDeduction += 30000;
         }
         return parentDeduction;
@@ -1516,6 +1582,23 @@ public class Family extends JPanel {
             }
         });
 
+        // "ลดหย่อนบิดา-มารดา (คู่สมรส)"
+        // ปุ่มกลม (บิดา)
+        MHM_marriedFather.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateTotalDeduction();
+            }
+        });
+
+        // ปุ่มกลม (มารดา)
+        MHM_marriedMother.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateTotalDeduction();
+            }
+        });
+
         // HaveKidPanel
         // textfield ของบุตรก่อน2561
         MHM_text_before.getDocument().addDocumentListener(new DocumentListener() {
@@ -1671,7 +1754,7 @@ public class Family extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 MDHM_haveKidPanel.setVisible(true);
                 MDHM_dontHaveKidPanel.setVisible(false);
-                updateTotalDeduction();
+                updateTotalDeductionForMDHM();
             }
         });
 
@@ -1681,7 +1764,7 @@ public class Family extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 MDHM_haveKidPanel.setVisible(false);
                 MDHM_dontHaveKidPanel.setVisible(true);
-                updateTotalDeduction();
+                updateTotalDeductionForMDHM();
             }
         });
 
@@ -1690,7 +1773,7 @@ public class Family extends JPanel {
         MDHM_father1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateTotalDeduction();
+                updateTotalDeductionForMDHM();
             }
         });
 
@@ -1698,7 +1781,24 @@ public class Family extends JPanel {
         MDHM_mother1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateTotalDeduction();
+                updateTotalDeductionForMDHM();
+            }
+        });
+
+        // "ลดหย่อนบิดา-มารดา (ตนเอง)"
+        // ปุ่มกลม (บิดา)
+        MDHM_marriedFather.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateTotalDeductionForMDHM();
+            }
+        });
+
+        // ปุ่มกลม (มารดา)
+        MDHM_marriedMother.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateTotalDeductionForMDHM();
             }
         });
 
@@ -1707,17 +1807,17 @@ public class Family extends JPanel {
         MDHM_text_before.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                updateTotalDeduction();
+                updateTotalDeductionForMDHM();
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                updateTotalDeduction();
+                updateTotalDeductionForMDHM();
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                updateTotalDeduction();
+                updateTotalDeductionForMDHM();
             }
         });
 
@@ -1725,17 +1825,17 @@ public class Family extends JPanel {
         MDHM_text_after.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                updateTotalDeduction();
+                updateTotalDeductionForMDHM();
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                updateTotalDeduction();
+                updateTotalDeductionForMDHM();
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                updateTotalDeduction();
+                updateTotalDeductionForMDHM();
             }
         });
 
@@ -1744,7 +1844,7 @@ public class Family extends JPanel {
         MDHM_father2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateTotalDeduction();
+                updateTotalDeductionForMDHM();
             }
         });
 
@@ -1752,7 +1852,7 @@ public class Family extends JPanel {
         MDHM_mother2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateTotalDeduction();
+                updateTotalDeductionForMDHM();
             }
         });
 
@@ -1760,7 +1860,7 @@ public class Family extends JPanel {
         MDHM_son.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateTotalDeduction();
+                updateTotalDeductionForMDHM();
             }
         });
 
@@ -1768,7 +1868,7 @@ public class Family extends JPanel {
         MDHM_cousin1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateTotalDeduction();
+                updateTotalDeductionForMDHM();
             }
         });
 
@@ -1777,7 +1877,7 @@ public class Family extends JPanel {
         MDHM_father3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateTotalDeduction();
+                updateTotalDeductionForMDHM();
             }
         });
 
@@ -1785,7 +1885,7 @@ public class Family extends JPanel {
         MDHM_mother3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateTotalDeduction();
+                updateTotalDeductionForMDHM();
             }
         });
 
@@ -1793,7 +1893,7 @@ public class Family extends JPanel {
         MDHM_married1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateTotalDeduction();
+                updateTotalDeductionForMDHM();
             }
         });
 
@@ -1803,7 +1903,7 @@ public class Family extends JPanel {
         MDHM_father4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateTotalDeduction();
+                updateTotalDeductionForMDHM();
             }
         });
 
@@ -1811,7 +1911,7 @@ public class Family extends JPanel {
         MDHM_mother4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateTotalDeduction();
+                updateTotalDeductionForMDHM();
             }
         });
 
@@ -1819,7 +1919,7 @@ public class Family extends JPanel {
         MDHM_cousin2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateTotalDeduction();
+                updateTotalDeductionForMDHM();
             }
         });
 
@@ -1828,7 +1928,7 @@ public class Family extends JPanel {
         MDHM_father5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateTotalDeduction();
+                updateTotalDeductionForMDHM();
             }
         });
 
@@ -1836,7 +1936,7 @@ public class Family extends JPanel {
         MDHM_mother5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateTotalDeduction();
+                updateTotalDeductionForMDHM();
             }
         });
 
@@ -1844,7 +1944,7 @@ public class Family extends JPanel {
         MDHM_married2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateTotalDeduction();
+                updateTotalDeductionForMDHM();
             }
         });
 

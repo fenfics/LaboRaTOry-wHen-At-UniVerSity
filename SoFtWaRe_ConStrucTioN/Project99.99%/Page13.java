@@ -13,7 +13,7 @@ public class Page13 extends JPanel {
     private final int MAX_TOTAL = 100000;
     private final int MAX_F3 = 25000;
     private final int MAX_F4 = 300000;
-
+     private int PVDvalue;
     public Page13(MainApplication mainApp) {
         setLayout(null);
         setBackground(Color.decode("#D8F5FF"));
@@ -34,7 +34,7 @@ public class Page13 extends JPanel {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainApp.showPage("HOME");
+                mainApp.showPage("Home");
             }
         });
         layeredPane.add(button, JLayeredPane.PALETTE_LAYER);
@@ -62,16 +62,27 @@ public class Page13 extends JPanel {
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int alltotalValue = getTotalValue();
-                int f4Value = parseValue(f4.getText());
+                 int alltotalValue = getTotalValue();
                 int valueF4 = Integer.parseInt(f4.getText().isEmpty() ? "0" : f4.getText());
-                int adjustedF4Value = 0;
-                if (valueF4 > 100000) {
-                    adjustedF4Value = valueF4 - 100000;
+                int f1Value = parseValue(f1.getText());
+                int f3Value = parseValue(f3.getText());
+                int usedQuota = f1Value + f3Value;
+                int remainingQuota = Math.max(100000 - usedQuota, 0);
+    
+                int adjustedF4Value;
+                if (remainingQuota > 0) {
+                    // Subtract the remaining quota from f4, but not less than 0
+                    adjustedF4Value = Math.max(valueF4 - remainingQuota, 0);
+                } else {
+                    // If no remaining quota, send full f4 value
+                    adjustedF4Value = valueF4;
                 }
-                mainApp.sendF4ToPage14(adjustedF4Value); // ส่งค่าของ f4 ไปยัง Page14
+    
+                mainApp.sendF4valuetoPage15(valueF4);
+                mainApp.sendF4toPage16(adjustedF4Value);
+                mainApp.sendF4ToPage14(adjustedF4Value);
                 mainApp.sendValuesToPage14(salaryYear, totalDeduction, totalValue, alltotalValue);
-                mainApp.showPage("page14");
+                mainApp.showPage("page14"); 
             }
         });
         layeredPane.add(button2, JLayeredPane.PALETTE_LAYER);
@@ -216,36 +227,47 @@ public class Page13 extends JPanel {
     }
 
     private void updateFields(JTextField currentField, JTextField otherField) {
-        int currentValue = parseValue(currentField.getText());
-        int otherValue = parseValue(otherField.getText());
-        int total = currentValue + otherValue;
+    int currentValue = parseValue(currentField.getText());
+    int otherValue = parseValue(otherField.getText());
+    int total = currentValue + otherValue;
 
-        if (total > MAX_TOTAL) {
-            int maxAllowed = MAX_TOTAL - otherValue;
-            if (maxAllowed < 0)
-                maxAllowed = 0;
-            currentField.setText(String.valueOf(maxAllowed));
-        }
-
-        if (currentField == f3 && currentValue > MAX_F3) {
-            currentField.setText(String.valueOf(MAX_F3));
-        }
+    if (total > MAX_TOTAL) {
+        int maxAllowed = MAX_TOTAL - otherValue;
+        if (maxAllowed < 0) maxAllowed = 0;
+        currentField.setText(String.valueOf(maxAllowed));
     }
+
+    if (currentField == f3 && currentValue > MAX_F3) {
+        currentField.setText(String.valueOf(MAX_F3));
+    }
+}
 
     private void updateF4() {
-        int f1Value = parseValue(f1.getText());
-        int f3Value = parseValue(f3.getText());
-        int f4Value = parseValue(f4.getText());
-        int remainingQuota = MAX_TOTAL - (f1Value + f3Value);
+    int f1Value = parseValue(f1.getText());
+    int f3Value = parseValue(f3.getText());
+    int f4Value = parseValue(f4.getText());
+    int usedQuota = f1Value + f3Value;
+    int remainingQuota = Math.max(100000 - usedQuota, 0);
 
-        // คำนวณค่าสูงสุดที่เป็นไปได้สำหรับ f4
-        int maxPossibleF4 = Math.min(PVDlimit + remainingQuota, 300000);
+    // Calculate maxF4 considering PVDlimit
+    int maxF4 = Math.min(PVDlimit, 300000);  // Limit to PVDlimit or 300,000, whichever is lower
 
-        // ถ้าค่าปัจจุบันของ f4 เกินค่าสูงสุดที่เป็นไปได้ ให้ปรับลงมา
-        if (f4Value > maxPossibleF4) {
-            f4.setText(String.valueOf(maxPossibleF4));
-        }
+    if (usedQuota < 100000) {
+        // If f1 and f3 haven't used the full 100,000 quota, add the remaining to maxF4
+        maxF4 = Math.min(maxF4 + remainingQuota, 300000);
+    } else {
+        // If f1 and f3 have used 100,000 or more, limit to PVDlimit or 200,000
+        maxF4 = Math.min(maxF4, 200000);
     }
+
+    // Ensure maxF4 is not negative
+    maxF4 = Math.max(maxF4, 0);
+
+    if (f4Value > maxF4) {
+        f4.setText(String.valueOf(maxF4));
+    }
+}
+
 
     private int parseValue(String text) {
         try {
@@ -271,6 +293,10 @@ public class Page13 extends JPanel {
         PVDlimit = (int) (Salaryyear180k * 0.15);
         System.out.println("กองทุนสำรองPVD limitหน้า13:" + PVDlimit);
 
+    }
+    public void getPVD(int value){
+    this.PVDvalue =value;
+    updateF4();
     }
 
     private static class DisplayGraphics extends JPanel {

@@ -209,20 +209,18 @@ public class MainApplication extends JFrame {
             }
         }   
 
-    public void sendValuesToPage15(int salaryAfterExpenses, int totalDeduction, int totalValue, int getTotalValue, int ToTalValue3, int netIncome) {
-        try {
-            page15.receiveData(salaryAfterExpenses, totalDeduction, totalValue, getTotalValue, ToTalValue3, netIncome);
-            showPage("page15");
-        } catch (Exception e) {
-            System.err.println("Error sending values to Page15: " + e.getMessage());
-            e.printStackTrace();
+     public void sendValuesToPage15(int salaryAfterExpenses, int totalDeduction, int totalValue, int getTotalValue, int ToTalValue3, int netIncome) {
+            try {
+                page15.receiveData(salaryAfterExpenses, totalDeduction, totalValue, getTotalValue, ToTalValue3, netIncome);
+                showPage("page15");
+            } catch (Exception e) {
+                System.err.println("Error sending values to Page15: " + e.getMessage());
+                e.printStackTrace();
+            }
         }
-    }
-
-    public void sendNetIncomeCalculated(int netIncome) {
-        page16.receiveData(netIncome);
-    }
-
+    public void sendRemainfor500K(int value){
+            page16.getValue(value);
+        }
     public void sendSalaryYearTopage12(int Salaryyear) {
         page12.get(Salaryyear);
     }
@@ -230,11 +228,6 @@ public class MainApplication extends JFrame {
     public void sendSalaryYearToPage14(int Salaryyear2) {
         page14.get(Salaryyear2);
     }
-
-    public void sendNetIncomeCalculatedPage17(int netIncome) {
-        page17.get(netIncome);
-    }
-
     public void sendTaxTopage16(int Tax) {
         page16.getTax(Tax);
     }
@@ -287,7 +280,28 @@ public class MainApplication extends JFrame {
     public void sendF4ToPage14(int valueF4) {
             page14.setF4Value(valueF4); // ส่งค่าจาก f4 page13 ไปยัง page14
     }
-
+    public void sendPVDtoPage16(int value){
+            page16.getPVD(value);
+        }
+    public void sendF4toPage16(int value){
+            page16.getF4(value);
+    }
+         public void sendbeartoPage16(int value){
+            page16.getAllpage14value(value);
+     }
+    public void sendNetIncomeCalculatedPage16(int value){
+         page16.getNet(value);
+     }
+    public void sendNettoPage17(int value){
+            page17.getNet(value);
+        }
+        public void sendPVDtoPage13(int value){
+            page13.getPVD(value);
+        }
+        public void sendF4valuetoPage15(int value){
+            page15.getF4value(value);
+        }
+        
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             MainApplication app = new MainApplication();

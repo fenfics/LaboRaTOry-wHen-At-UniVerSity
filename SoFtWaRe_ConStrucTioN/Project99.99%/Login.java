@@ -49,9 +49,7 @@ public class Login extends JPanel {
         finishButton.setForeground(Color.WHITE);
         finishButton.setFont(new Font("Tahoma", Font.BOLD, 20));
         finishButton.setBounds(511, 622, 110, 40);
-        finishButton.addActionListener(e -> {
-            login();
-        });
+        finishButton.addActionListener(e -> login());
         layeredPane.add(finishButton, JLayeredPane.PALETTE_LAYER);
     }
 
@@ -113,16 +111,21 @@ public class Login extends JPanel {
             if (checkPin(username, password)) {
                 // ทำสิ่งที่ต้องการเมื่อ PIN ถูกต้อง
                 JOptionPane.showMessageDialog(this, "Login successful! Welcome " + username + "!");
-                mainApp.sendUsernametoPage15(username);
-                mainApp.sendUsernameToPie(username);
+                sendUsernameToAllPage(username);
                 mainApp.showPage("Home");
-                mainApp.sendUsernameToHome(username);
-                mainApp.sendUsernameToCompare(username);
-                mainApp.sendUsernameToHistory(username);
+
             } else {
                 JOptionPane.showMessageDialog(this, "PIN is incorrect.");
             }
         }
+    }
+
+    private void sendUsernameToAllPage(String username) {
+        mainApp.sendUsernametoPage15(username);
+        mainApp.sendUsernameToPie(username);
+        mainApp.sendUsernameToHome(username);
+        mainApp.sendUsernameToCompare(username);
+        mainApp.sendUsernameToHistory(username);
     }
 
     private boolean checkPin(String username, String pin) {

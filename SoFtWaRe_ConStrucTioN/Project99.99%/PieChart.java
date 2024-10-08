@@ -2,7 +2,6 @@ import java.awt.*;
 import java.io.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
 import org.jfree.chart.*;
 import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 import org.jfree.chart.plot.PiePlot;
