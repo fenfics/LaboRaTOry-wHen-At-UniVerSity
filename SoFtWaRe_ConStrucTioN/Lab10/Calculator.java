@@ -5,29 +5,32 @@ import java.awt.event.*;
 public class Calculator extends JFrame implements ActionListener {
     private JTextField displayField;
     private StringBuilder currentInput;
+    private double memory;
 
     public Calculator() {
         setTitle("Calculator");
-        setSize(300, 400);
+        setSize(400, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
         displayField = new JTextField();
         displayField.setHorizontalAlignment(JTextField.RIGHT);
-        displayField.setFont(new Font("Arial", Font.BOLD, 30));
+        displayField.setFont(new Font("Arial", Font.BOLD, 40));
         displayField.setEditable(false);
         add(displayField, BorderLayout.NORTH);
 
-        JPanel buttonPanel = new JPanel(new GridLayout(4, 4));
+        JPanel buttonPanel = new JPanel(new GridLayout(5, 4)); // Add another row for memory buttons
 
         String[] buttons = {
             "C", "CE", "/", "*",
             "7", "8", "9", "+",
             "4", "5", "6", "-",
-            "1", "2", "3", "="
+            "1", "2", "3", "+/-",
+            "reset", "0", ".", "=",
         };
 
         currentInput = new StringBuilder();
+        memory = 0;  // Initialize memory to zero
 
         for (String label : buttons) {
             JButton button = new JButton(label);
@@ -57,6 +60,21 @@ public class Calculator extends JFrame implements ActionListener {
                     displayField.setText(currentInput.toString());
                 }
                 break;
+            case "reset":
+                currentInput.setLength(0);
+                displayField.setText("");
+                memory = 0;
+                break;
+            case "+/-":
+                if (currentInput.length() > 0) {
+                    if (currentInput.charAt(0) == '-') {
+                        currentInput.deleteCharAt(0); // Remove the negative sign
+                    } else {
+                        currentInput.insert(0, '-'); // Add the negative sign
+                    }
+                    displayField.setText(currentInput.toString());
+                }
+                break;
             case "=":
                 try {
                     String result = evaluateExpression(currentInput.toString());
@@ -68,6 +86,10 @@ public class Calculator extends JFrame implements ActionListener {
                 }
                 break;
             default:
+                if (command.equals(".") && currentInput.toString().contains(".")) {
+                    // Prevent multiple decimals
+                    break;
+                }
                 currentInput.append(command);
                 displayField.setText(currentInput.toString());
                 break;
